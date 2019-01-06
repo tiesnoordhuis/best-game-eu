@@ -10,13 +10,7 @@ new Vue({
     maxHeal: 12,
     logs: [],
   },
-  computed: {
-    healthStyle(health) {
-      return {
-        backgroundColor: health < 50 ? 'red' : 'green',
-      }
-    },
-  },
+  computed: {},
   methods: {
     startGame() {
       this.playerHP = 100;
