@@ -8,6 +8,7 @@ new Vue({
     maxDamage: 10,
     minHeal: 5,
     maxHeal: 12,
+    logs: [],
   },
   computed: {
     healthStyle(health) {
@@ -40,7 +41,21 @@ new Vue({
       if (!this.gameRunning) return;
 
       const playerDamage = Math.floor(Math.random() * (this.maxDamage - this.minDamage + 1)) + this.minDamage;
-      const monsterDamage = Math.floor(Math.random() * (this.maxDamage - this.minDamage + 1)) + this.minDamage;
+      const monsterDamage = Math.floor(Math.random() * (this.maxDamage - this.minDamage + 1)) + this.minDamage + 6;
+
+      this.logs.push({
+        entity: 'Player',
+        action: 'attack',
+        damage: playerDamage,
+        to: 'monster'
+      })
+
+      this.logs.push({
+        entity: 'Monster',
+        action: 'attack',
+        damage: monsterDamage,
+        to: 'player'
+      })
 
       this.monsterHP -= playerDamage;
       this.playerHP -= monsterDamage;
@@ -52,6 +67,20 @@ new Vue({
       const playerDamage = Math.floor(Math.random() * (this.maxDamage - this.minDamage + 1)) + 10;
       const monsterDamage = Math.floor(Math.random() * (this.maxDamage - this.minDamage + 1)) + this.minDamage;
 
+      this.logs.push({
+        entity: 'Player',
+        action: 'special',
+        damage: playerDamage,
+        to: 'monster'
+      })
+
+      this.logs.push({
+        entity: 'Monster',
+        action: 'attack',
+        damage: monsterDamage,
+        to: 'player'
+      })
+
       this.monsterHP -= playerDamage;
       this.playerHP -= monsterDamage;
       this.checkState()
@@ -62,17 +91,36 @@ new Vue({
       const playerHeal = Math.floor(Math.random() * (this.maxHeal - this.minHeal + 1)) + this.minHeal
       const monsterDamage = Math.floor(Math.random() * (this.maxDamage - this.minDamage + 1)) + this.minDamage;
 
+
+      this.logs.push({
+        entity: 'Player',
+        action: 'heal',
+        damage: playerHeal,
+        to: 'monster'
+      })
+
+      this.logs.push({
+        entity: 'Monster',
+        action: 'attack',
+        damage: monsterDamage,
+        to: 'player'
+      })
+
       this.playerHP = this.playerHP - monsterDamage + playerHeal;
       this.checkState()
     },
     calculateHealthStyle(entity) {
       let hitpoints = entity === 'monster' ? this.monsterHP : this.playerHP;
-      console.log(hitpoints)
       return {
         backgroundColor: hitpoints < 50 ? 'red' : 'green',
         width: hitpoints + '%'
       }
     },
+    calculateLogStyle(entity) {
+      return {
+        backgroundColor: entity === 'Player' ? 'green' : 'red'
+      }
+    }
 
   }
 })

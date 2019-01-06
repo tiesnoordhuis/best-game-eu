@@ -45,8 +45,16 @@
         <section class="row log">
             <div class="small-12 columns">
                 <ul>
-                    <li>
-
+                    <li v-for="log in logs">
+                        <p v-if="log.action === 'attack'" :style="calculateLogStyle(log.entity)">
+                            {{ log.entity }} did {{ log. damage }} damage to {{ log.to }}
+                        </p>
+                        <p v-if="log.action === 'heal'" :style="calculateLogStyle(log.entity)">
+                            {{ log.entity }} healed for {{ log. damage }} hitpints
+                        </p>
+                        <p v-if="log.action === 'special'" style="background-color: yellow">
+                            {{ log.entity }} USED A SPECIAL ATTACK FULL OF CRAZY DAMAGE FOR {{ log. damage }} HITPOINTS
+                        </p>
                     </li>
                 </ul>
             </div>
