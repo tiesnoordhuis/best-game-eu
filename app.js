@@ -16,6 +16,7 @@ new Vue({
       this.playerHP = 100;
       this.monsterHP = 100;
       this.gameRunning = true;
+      this.logs = [];
     },
     stopGame() {
       this.gameRunning = false;
