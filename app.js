@@ -24,6 +24,7 @@ new Vue({
     checkState() {
       if (this.playerHP < 0) {
         alert('you lost, this is like easy mode game noob, how u even lose')
+        this.gameRunning = false;
       }
 
       if (this.monsterHP < 0) {
